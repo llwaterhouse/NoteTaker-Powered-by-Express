@@ -42,13 +42,14 @@ const saveNote = (note) =>
     body: JSON.stringify(note),
   });
 
-const deleteNote = (id) =>
+const deleteNote = (id) =>{
+  console.log("in deleteNote ",`/api/notes/${id}` )
   fetch(`/api/notes/${id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
     },
-  });
+  })};
 
 const renderActiveNote = () => {
   hide(saveNoteBtn);
@@ -84,6 +85,7 @@ const handleNoteDelete = (e) => {
 
   const note = e.target;
   const noteId = JSON.parse(note.parentElement.getAttribute('data-note')).id;
+  console.log("handleNoteDelete:  noteID", {noteId});
 
   if (activeNote.id === noteId) {
     activeNote = {};
@@ -127,7 +129,6 @@ const renderNoteList = async (notes) => {
   }
 
   let noteListItems = [];
-console.log("about to create noteListItems");
   // Returns HTML element with or without a delete button
   const createLi = (text, delBtn = true) => {
     const liEl = document.createElement('li');

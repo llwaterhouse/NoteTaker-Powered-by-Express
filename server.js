@@ -16,14 +16,9 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
 // GET Route for notes.html
-app.get('/notes', (req, res) =>{
-  res.sendFile(path.join(__dirname, '/public/notes.html'))
-}
-);
-// GET Route for homepage
-app.get('*', (req, res) =>
-  res.sendFile(path.join(__dirname, '/public/index.html'))
-);
+app.get('/notes', (req, res) => {
+	res.sendFile(path.join(__dirname, '/public/notes.html'));
+});
 
 // GET Route for feedback page
 // app.get('/feedback', (req, res) =>
@@ -40,9 +35,11 @@ const readFromFile = util.promisify(fs.readFile);
  *  @returns {void} Nothing
  */
 const writeToFile = (destination, content) =>
-  fs.writeFile(destination, JSON.stringify(content, null, 4), (err) =>
-    err ? console.error(err) : console.info(`writeToFile:\nData written to ${destination}`)
-  );
+	fs.writeFile(
+		destination,
+		JSON.stringify(content, null, 4),
+		(err) => (err ? console.error(err) : console.info(`writeToFile:\nData written to ${destination}`))
+	);
 
 /**
  *  Function to read data from a given a file and append some content
@@ -51,44 +48,44 @@ const writeToFile = (destination, content) =>
  *  @returns {void} Nothing
  */
 const readAndAppend = (content, file) => {
-  fs.readFile(file, 'utf8', (err, data) => {
-    if (err) {
-      console.error(err);
-    } else {
-      const parsedData = JSON.parse(data);
-      parsedData.push(content);
-      writeToFile(file, parsedData);
-      console.log("inreadandappend, after writeTofile");
-    }
-  });
+	fs.readFile(file, 'utf8', (err, data) => {
+		if (err) {
+			console.error(err);
+		} else {
+			const parsedData = JSON.parse(data);
+			parsedData.push(content);
+			writeToFile(file, parsedData);
+			console.log('inreadandappend, after writeTofile');
+		}
+	});
 };
 
 // GET Route for retrieving all the notes
 app.get('/api/notes', (req, res) => {
-  console.info(`${req.method} request received for notes`);
-  readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
+	console.info(`${req.method} request received for notes`);
+	readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
 });
 
 // POST Route for a new note
 app.post('/api/notes', (req, res) => {
-  console.info(`${req.method} request received to add a note`);
+	console.info(`${req.method} request received to add a note`);
 
-  const { title, text,} = req.body;
+	const { title, text } = req.body;
 
-  if (req.body) {
-    const newNote = {
-      title,
-      text,
-      id: uuid(),
-    };
+	if (req.body) {
+		const newNote = {
+			title,
+			text,
+			id: uuid()
+		};
 
-    readAndAppend(newNote, './db/db.json');
-    console.log("app.post api/notes,after readAndAppend");
-    res.json(`Note added successfully 🚀`);
-  } else {
-      console.log("error condition");
-    res.error('Error in adding note');
-  }
+		readAndAppend(newNote, './db/db.json');
+		console.log('app.post api/notes,after readAndAppend');
+		res.json(`Note added successfully 🚀`);
+	} else {
+		console.log('error condition');
+		res.error('Error in adding note');
+	}
 });
 
 // GET Route for retrieving all the feedback
@@ -129,6 +126,15 @@ app.post('/api/notes', (req, res) => {
 //   }
 // });
 
-app.listen(PORT, () =>
-  console.log(`Notes App listening at http://localhost:${PORT} 🚀`)
-);
+app.delete('/api/notes/:id', (req, res) => {
+	console.info(`${req.method} request received for notes id`, JSON.parse(req));
+});
+
+// GET Route for homepage
+app.get('*', (req, res) => {
+	console.log('in wildcard');
+	console.info(`${req.method} request received for wildcard`, `${req}`);
+	res.sendFile(path.join(__dirname, '/public/index.html'));
+});
+
+app.listen(PORT, () => console.log(`Notes App listening at http://localhost:${PORT} 🚀`));
