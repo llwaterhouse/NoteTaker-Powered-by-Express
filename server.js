@@ -6,7 +6,7 @@ const util = require('util');
 // Helper method for generating unique ids
 const uuid = require('./helpers/uuid');
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 const app = express();
 
@@ -19,11 +19,6 @@ app.use(express.static('public'));
 app.get('/notes', (req, res) => {
 	res.sendFile(path.join(__dirname, '/public/notes.html'));
 });
-
-// GET Route for feedback page
-// app.get('/feedback', (req, res) =>
-//   res.sendFile(path.join(__dirname, '/public/pages/feedback.html'))
-// );
 
 // Promise version of fs.readFile
 const readFromFile = util.promisify(fs.readFile);
@@ -92,7 +87,7 @@ app.post('/api/notes', (req, res) => {
 app.delete('/api/notes/:id', (req, res) => {
 	console.info(`${req.method} request received for notes id`);
 	const noteId = req.params.id;
-	// Promisfy version of fs.readFile()
+	// Promisify version of fs.readFile()
 	readFromFile('./db/db.json')
 		.then((data)=>JSON.parse(data))
 		.then((json) => {
@@ -106,12 +101,18 @@ app.delete('/api/notes/:id', (req, res) => {
 			res.json(`Item ${noteId} has been deleted 🗑️`);
 		});
 });
-
-// GET Route for homepage
-app.get('*', (req, res) => {
-	console.log('in wildcard');
-	console.info(`${req.method} request received for wildcard`);
-	res.sendFile(path.join(__dirname, '/public/index.html'));
-});
+// app.get('/', (req, res) => {
+// 	// ?? Find out why I don't see these console.logs
+// 	console.log('in /');
+// 	console.info(`${req.method} request received for /`);
+// 	res.sendFile(path.join(__dirname, '/public/index.html'));
+// });
+// // GET Route for homepage
+// app.get('*', (req, res) => {
+// 	// ?? Find out why I don't see these console.logs
+// 	console.log('in wildcard');
+// 	console.info(`${req.method} request received for wildcard`);
+// 	res.sendFile(path.join(__dirname, '/public/index.html'));
+// });
 
 app.listen(PORT, () => console.log(`Notes App listening at http://localhost:${PORT} 🚀`));

@@ -42,17 +42,17 @@ const saveNote = (note) =>
     body: JSON.stringify(note),
   });
 
-const deleteNote = (id) =>
-  fetch(`/api/notes/${id}`, {
+  // because I added braces to the arrow function, I need to explicitly say return for the ".then" to work. When you don't have {}, there's an explicit return.
+const deleteNote = (id) =>{
+  return fetch(`/api/notes/${id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
     },
-  });
+  })};
 
 const renderActiveNote = () => {
   hide(saveNoteBtn);
-
   if (activeNote.id) {
     noteTitle.setAttribute('readonly', true);
     noteText.setAttribute('readonly', true);
@@ -89,10 +89,25 @@ const handleNoteDelete = (e) => {
     activeNote = {};
   }
 
-  deleteNote(noteId).then(() => {
+  fetch(`/api/notes/${noteId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  .then(() => {
+    console.log("about to call getAndRenderNotes()");
     getAndRenderNotes();
     renderActiveNote();
   });
+
+  // deleteNote(noteId).then(() => {
+  //   console.log("about to call getAndRenderNotes()");
+  //   getAndRenderNotes();
+  //   renderActiveNote();
+  // });
+
+
 };
 
 // Sets the activeNote and displays it
@@ -102,7 +117,7 @@ const handleNoteView = (e) => {
   renderActiveNote();
 };
 
-// Sets the activeNote to and empty object and allows the user to enter a new note
+// Sets the activeNote to an empty object and allows the user to enter a new note
 const handleNewNoteView = (e) => {
   activeNote = {};
   renderActiveNote();
@@ -117,15 +132,15 @@ const handleRenderSaveBtn = () => {
 };
 
 // Render the list of note titles
-// ??? What does async(notes) do?
+// ??What does async(notes) do?
 const renderNoteList = async (notes) => {
+  console.log("in renderNoteList after async", {notes});
   let jsonNotes = await notes.json();
   if (window.location.pathname === '/notes') {
     noteList.forEach((el) => (el.innerHTML = ''));
   }
-
+  console.log ("in renderNoteList", {noteList}, {jsonNotes});
   let noteListItems = [];
-
   // Returns HTML element with or without a delete button
   const createLi = (text, delBtn = true) => {
     const liEl = document.createElement('li');
@@ -173,10 +188,10 @@ const renderNoteList = async (notes) => {
 
 // Gets notes from the db and renders them to the sidebar
 const getAndRenderNotes = () => getNotes().then(renderNoteList);
-
 if (window.location.pathname === '/notes') {
   saveNoteBtn.addEventListener('click', handleNoteSave);
   newNoteBtn.addEventListener('click', handleNewNoteView);
+  // 
   noteTitle.addEventListener('keyup', handleRenderSaveBtn);
   noteText.addEventListener('keyup', handleRenderSaveBtn);
 }
