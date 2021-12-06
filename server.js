@@ -91,6 +91,20 @@ app.post('/api/notes', (req, res) => {
 
 app.delete('/api/notes/:id', (req, res) => {
 	console.info(`${req.method} request received for notes id`);
+	const noteId = req.params.id;
+	// Promisfy version of fs.readFile()
+	readFromFile('./db/db.json')
+		.then((data)=>JSON.parse(data))
+		.then((json) => {
+			// Make a new array of notes except the one with the ID that matches from the URL
+			const result = json.filter((note)=>note.id !== (noteId));
+
+			// Save that array to the filesystem
+			writeToFile('./db/db.json', result);
+
+			// Respond to the DELETE request
+			res.json(`Item ${noteId} has been deleted 🗑️`);
+		});
 });
 
 // GET Route for homepage
