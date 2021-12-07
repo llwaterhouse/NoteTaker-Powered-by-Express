@@ -9,6 +9,16 @@ h1, h2, h3, h4, h5 , h6 {
   font-family: 'Just Another Hand', cursive;
 }
 
+h1.display-4 {
+  font-size: 60pt;
+  letter-spacing: 1.5pt;
+}
+
+h3.subtitle {
+  font-size: 35pt;
+  letter-spacing: 1pt;
+}
+
 .save-note {
   display: none;
 }
@@ -79,4 +89,15 @@ h1, h2, h3, h4, h5 , h6 {
   border-right: none;
   padding: 20px;
   cursor: pointer;
+  font-family: 'Just Another Hand', cursive;
+  font-size: 24pt;
+  letter-spacing: 1pt;
+}
+
+.nav-bg {
+  background-color: #025555 !important;
+}
+
+.container-bg {
+  background-color: #ccdddd;
 }
