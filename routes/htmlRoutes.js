@@ -8,8 +8,8 @@ router.get("/notes", (req, res) => {
 });
 
 //This function *MUST* be last of ALL the .gets, even looking at other route files!!!!
-router.get("*",  (req, res) => {
-		res.sendFile(path.join(__dirname, '../public/index.html'));
-});
+// router.get("*",  (req, res) => {
+// 		res.sendFile(path.join(__dirname, '../public/index.html'));
+// });
 
 module.exports = router

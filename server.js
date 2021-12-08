@@ -2,7 +2,6 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const util = require('util');
-// const api = require('./routes');
 const {readFromFile, writeToFile, readAndAppend } = require ("./helpers/fsUtils");
 
 // Helper method for generating unique ids
