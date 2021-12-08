@@ -18,17 +18,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 //defining routes
-const apiRoutes = require('./routes/apiRoutes');
+// const apiRoutes = require('./routes/apiRoutes');
 
-app.use(apiRoutes);
+// app.use(apiRoutes);
 
 
 
 // GET Route for retrieving all the notes
-// app.get('/api/notes', (req, res) => {
-// 	console.info(`${req.method} request received for notes`);
-// 	readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
-// });
+app.get('/api/notes', (req, res) => {
+	console.info(`${req.method} request received for notes`);
+	readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
+});
 
 // POST Route for a new note
 app.post('/api/notes', (req, res) => {
