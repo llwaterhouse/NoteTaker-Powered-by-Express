@@ -51,6 +51,14 @@ const deleteNote = (id) =>{
     },
   })};
 
+    // deleteNote(noteId).then(() => {
+  //   console.log("about to call getAndRenderNotes()");
+  //   getAndRenderNotes();
+  //   renderActiveNote();
+  // });
+
+
+
 const renderActiveNote = () => {
   hide(saveNoteBtn);
   if (activeNote.id) {
@@ -96,16 +104,9 @@ const handleNoteDelete = (e) => {
     },
   })
   .then(() => {
-    console.log("about to call getAndRenderNotes()");
     getAndRenderNotes();
     renderActiveNote();
   });
-
-  // deleteNote(noteId).then(() => {
-  //   console.log("about to call getAndRenderNotes()");
-  //   getAndRenderNotes();
-  //   renderActiveNote();
-  // });
 
 
 };
@@ -134,12 +135,11 @@ const handleRenderSaveBtn = () => {
 // Render the list of note titles
 // ??What does async(notes) do?
 const renderNoteList = async (notes) => {
-  console.log("in renderNoteList after async", {notes});
+
   let jsonNotes = await notes.json();
   if (window.location.pathname === '/notes') {
     noteList.forEach((el) => (el.innerHTML = ''));
   }
-  console.log ("in renderNoteList", {noteList}, {jsonNotes});
   let noteListItems = [];
   // Returns HTML element with or without a delete button
   const createLi = (text, delBtn = true) => {

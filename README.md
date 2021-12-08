@@ -41,7 +41,7 @@
 
 ## Installation Instructions
 
-If you want to edit application you must have a Github account, download Visual Studio Code, install node.js, and inquirer 
+If you want to edit application you must have a Github account, download Visual Studio Code, install node.js and install Express.
 
 [Create a Github account](https://github.com)
 
@@ -54,33 +54,22 @@ Clone the github project
 
 To install packages dependencies in package.json, open a console in the top level directory and run the following command 
 
->npm install 
+>npm i
 
 ## Usage
 To run this application, simply click on this link:
 
+[Deployed Note Taker](https://notetaker-powered-by-express.herokuapp.com/)
 
-Then answer the questions at the command line interface.
 
 ## Deliverables
 
-[Sample team.html file that is generated](output/team.html)
-
-### Walkthrough video
-
-The walkthrough video shows how all of the tests pass using the command:
->npm test
-
-It then shows how the application is run and how the input is entered and creates an example team using the command:
->node index
-
-and displays the final team.html file.
- 
-[Click here to watch Walkthrough Video](https://watch.screencastify.com/v/GnWDpSZOAfDbLp9Y2Bkf)
+### App Link
+[Note Taker app](https://notetaker-powered-by-express.herokuapp.com/)
 
 ### Repository
 
-[GitHub repository for this project](https://github.com/llwaterhouse/Easy-to-use-Team-Profile-Generator)
+[GitHub repository for this project](https://github.com/llwaterhouse/NoteTaker-Powered-by-Express)
 
 
 ## Acknowledgements
