@@ -2,10 +2,11 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const util = require('util');
+const api = require('routes');
 
 // Helper method for generating unique ids
 const uuid = require('./helpers/uuid');
-
+// Must add the process.env.port for Heroku
 const PORT = process.env.PORT || 3001;
 
 const app = express();
@@ -83,7 +84,7 @@ app.post('/api/notes', (req, res) => {
 	}
 });
 
-
+// Look for the note with the passed in id and delete it.
 app.delete('/api/notes/:id', (req, res) => {
 	console.info(`${req.method} request received for notes id`);
 	const noteId = req.params.id;
@@ -101,18 +102,6 @@ app.delete('/api/notes/:id', (req, res) => {
 			res.json(`Item ${noteId} has been deleted 🗑️`);
 		});
 });
-// app.get('/', (req, res) => {
-// 	// ?? Find out why I don't see these console.logs
-// 	console.log('in /');
-// 	console.info(`${req.method} request received for /`);
-// 	res.sendFile(path.join(__dirname, '/public/index.html'));
-// });
-// // GET Route for homepage
-// app.get('*', (req, res) => {
-// 	// ?? Find out why I don't see these console.logs
-// 	console.log('in wildcard');
-// 	console.info(`${req.method} request received for wildcard`);
-// 	res.sendFile(path.join(__dirname, '/public/index.html'));
-// });
+
 
 app.listen(PORT, () => console.log(`Notes App listening at http://localhost:${PORT} 🚀`));
