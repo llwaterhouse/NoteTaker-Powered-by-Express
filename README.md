@@ -17,6 +17,8 @@
 
 * The final app is deployed to Heroku.
 
+* The app is fully responsive and I customized it by adding a favicon as well as changing the color pallette and one of the fonts.
+
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
