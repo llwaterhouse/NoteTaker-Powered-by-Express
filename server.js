@@ -15,44 +15,13 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+//  Allows a static folder to be available to respond with, like index.html and notes.html. For security
 app.use(express.static('public'));
 
 //defining routes
 const apiRoutes = require('./routes/apiRoutes');
 
-// app.use(apiRoutes);
 app.use('/api', apiRoutes);
-
-
-
-// GET Route for retrieving all the notes
-// app.get('/api/notes', (req, res) => {
-// 	console.info(`${req.method} request received for notes`);
-// 	readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
-// });
-
-// POST Route for a new note
-// app.post('/api/notes', (req, res) => {
-// 	console.info(`${req.method} request received to add a note`);
-
-// 	const { title, text } = req.body;
-
-// 	if (req.body) {
-// 		const newNote = {
-// 			title,
-// 			text,
-// 			id: uuid()
-// 		};
-
-// 		readAndAppend(newNote, './db/db.json');
-// 		console.log('app.post api/notes,after readAndAppend');
-// 		res.json(`Note added successfully 🚀`);
-// 	} else {
-// 		console.log('error condition');
-// 		res.error('Error in adding note');
-// 	}
-// });
-// 
 
 const htmlRoutes = require('./routes/htmlRoutes');
 // This **must** be last because it uses the '*' wildcard.

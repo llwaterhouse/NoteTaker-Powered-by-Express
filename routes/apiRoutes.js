@@ -7,11 +7,10 @@ const {readFromFile, writeToFile, readAndAppend } = require ("../helpers/fsUtils
 // Helper method for generating unique ids
 const uuid = require('../helpers/uuid');
 
-// const app = express();
 
 // GET Route for retrieving all the notes
 router.get('/notes', (req, res) => {
-// app.get("/notes", (req, res) => {
+
 	console.info(`${req.method} request received for notes`);
 	readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
 });
@@ -33,7 +32,7 @@ router.post('/notes', (req, res) => {
 		res.json(`Note added successfully 🚀`);
 	} else {
 		console.log('error condition');
-		res.error('Error in adding note');
+		res.status(409).send('Error in adding note');
 	}
 });
 
